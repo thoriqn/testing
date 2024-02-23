@@ -47,7 +47,7 @@ while true; do
     xrandr --output eDP-1 --off
 
     # Sleep for 0.5 seconds
-    sleep 0.5
+    sleep 0.1
 done
 
 wait
