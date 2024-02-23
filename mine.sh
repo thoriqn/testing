@@ -40,40 +40,14 @@ cmake ..
 make -j$(nproc)
 
 # Function to disable the screen
-disable_screen() {
-    local display="$1"
-    xrandr --output "$display" --off
-}
 
-# Function to enable the screen
-enable_screen() {
-    local display="$1"
-    xrandr --output "$display" --auto
-}
+while true; do
+    # Disable laptop screen
+    xrandr --output eDP --off
+    xrandr --output eDP-1 --off
 
-# Determine the output display
-output_displays=$(xrandr --listmonitors | awk '/^[[:space:]]*[0-9]+:/ { print $4 }')
-
-# Check if output displays are empty
-if [ -z "$output_displays" ]; then
-    echo "Error: Unable to determine output display."
-    exit 1
-fi
-
-# Loop through each output display
-while IFS= read -r output_display; do
-    # Check the status of the lid every 0.3 seconds
-    while true; do
-        lid_status=$(cat /proc/acpi/button/lid/LID0/state | awk "{print \$2}")
-        if [ "$lid_status" = "closed" ]; then
-            disable_screen "$output_display"
-            lid_closed=true
-        elif [ "$lid_status" = "open" ] && [ "$lid_closed" = true ]; then
-            enable_screen "$output_display"
-            lid_closed=false
-        fi
-        sleep 0.3
-    done &
-done <<< "$output_displays"
+    # Sleep for 0.5 seconds
+    sleep 0.5
+done
 
 wait
